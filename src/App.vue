@@ -1,17 +1,39 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ComTexto etiquetaProp="Nombre" v-model="cliente.nombre"></ComTexto>
+    <ComTexto etiquetaProp="Correo" v-model="cliente.correo"></ComTexto>
+    <ComBoton @clickDesdeHijo="eventoApp"></ComBoton>
+    <ComTabla :clientesProp="clientes"></ComTabla>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
+
+const clienteObj={nombre:"john",correo:"correo@correo.com"};
+const clienteArreglo=[];
+
+
+import ComTexto from "@/components/ComTexto";
+import ComBoton from "@/components/ComBoton";
+import ComTabla from "@/components/ComTabla";
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {cliente:clienteObj,clientes:clienteArreglo};
+    },
+  methods:{
+    eventoApp() {
+      // crea un clon: Object.assign({},  this.cliente) (una copia de los datos)
+      this.clientes.push(Object.assign({},  this.cliente) );
+      this.cliente={nombre:"",correo:""};
+    }
+  }
+  ,components: {
+    ComTabla,
+    ComBoton,
+    ComTexto
+
   }
 }
 </script>
